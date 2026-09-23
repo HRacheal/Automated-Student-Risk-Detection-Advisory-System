@@ -1,0 +1,23 @@
+/* Active Navigation Tab Style */
+.tab-btn.active {
+    background-color: #3730a3;
+    color: #ffffff;
+}
+
+/* Custom Scrollbar for Chat Window */
+#chatMessages::-webkit-scrollbar {
+    width: 6px;
+}
+#chatMessages::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+/* Card Hover Elevation */
+.student-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.student-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}

@@ -1,0 +1,16 @@
+# Python / Virtual Environment
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Node / Frontend
+node_modules/
+.next/
+dist/
+build/
+
+# Environment Variables & Secrets
+.env
+.env.local
