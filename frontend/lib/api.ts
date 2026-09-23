@@ -4,7 +4,7 @@ const API_BASE_URL =
 
 export async function fetchStudents() {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/students`, {
+    const response = await fetch(`${API_BASE_URL}/api/students/search`, {
       method: "GET",
       headers: {
         "Accept": "application/json",
