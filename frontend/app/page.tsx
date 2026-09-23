@@ -27,7 +27,7 @@ export default function EduSentinelDashboard() {
   useEffect(() => {
     async function fetchStudents() {
       try {
-        const response = await fetch(`http://localhost:8000/api/students/search?q=${encodeURIComponent(searchQuery)}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/students/search?q=${encodeURIComponent(searchQuery)}`);{encodeURIComponent(searchQuery)}`);
         const data = await response.json();
         setStudents(data.students || []);
       } catch (error) {
@@ -66,7 +66,7 @@ export default function EduSentinelDashboard() {
 
     try {
       // Option A: Send query directly to your FastAPI backend chat endpoint if available
-      const res = await fetch("http://localhost:8000/api/chat", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}/api/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg })
