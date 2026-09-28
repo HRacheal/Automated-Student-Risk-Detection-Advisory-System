@@ -1,22 +1,25 @@
+# Versions pinned to the set the test suite passes with, so the hosting platform installs
+# exactly what was tested (an unpinned install pulled SQLAlchemy 2.1, which was never tested).
+
 # Core API (required)
-fastapi
-uvicorn[standard]
-sqlalchemy
-psycopg2-binary
-pydantic
-python-dotenv
-httpx
-PyJWT
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+sqlalchemy==2.0.54
+psycopg2-binary==2.9.13
+pydantic==2.13.5
+python-dotenv==1.2.3
+httpx==0.28.1
+PyJWT==2.15.0
 
 # Experimental ML predictive risk (optional: the app runs without these)
-pandas
-numpy
-scikit-learn
-xgboost
-shap
+pandas==3.0.6
+numpy==2.5.3
+scikit-learn==1.9.1
+xgboost==3.4.1
+shap==0.52.0
 
 # Tests
-pytest
+pytest==9.1.1
 
 # Optional, offline only: Transformer experiment (sequence_model.py / scripts/evaluate_models.py).
 # Not imported by the API. CPU build:  pip install torch --index-url https://download.pytorch.org/whl/cpu
