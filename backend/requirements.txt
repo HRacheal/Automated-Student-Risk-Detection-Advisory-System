@@ -1,11 +1,23 @@
+# Core API (required)
 fastapi
-uvicorn
+uvicorn[standard]
 sqlalchemy
 psycopg2-binary
 pydantic
-scikit-learn
-xgboost
+python-dotenv
+httpx
+PyJWT
+
+# Experimental ML predictive risk (optional: the app runs without these)
 pandas
 numpy
+scikit-learn
+xgboost
 shap
-torch
+
+# Tests
+pytest
+
+# Optional, offline only: Transformer experiment (sequence_model.py / scripts/evaluate_models.py).
+# Not imported by the API. CPU build:  pip install torch --index-url https://download.pytorch.org/whl/cpu
+# torch

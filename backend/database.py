@@ -1,20 +1,33 @@
 # backend/database.py
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import NullPool
+from sqlalchemy.orm import declarative_base, sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://postgres.exzfeyytdtijtsjvfixl:%40Gikundiro5@aws-0-eu-west-2.pooler.supabase.com:6543/postgres"
+from config import settings
 
-# Added poolclass=NullPool to prevent transaction pooler errors on port 6543
+if not settings.DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL is not set. Add it to backend/.env (see backend/.env.example)."
+    )
+
+_connect_args = {}
+if "supabase" in settings.DATABASE_URL:
+    _connect_args["sslmode"] = "require"
+
+# A small pre-pinged pool: opening a new SSL connection to Supabase costs
+# 2-4 s, so connections are reused. psycopg2 does not use server-side prepared
+# statements, which keeps this compatible with the transaction pooler (6543).
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, 
-    poolclass=NullPool,
-    connect_args={"sslmode": "require"}
+    settings.DATABASE_URL,
+    pool_size=5,
+    max_overflow=5,
+    pool_pre_ping=True,
+    pool_recycle=300,
+    connect_args=_connect_args,
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
 
 def get_db():
     db = SessionLocal()

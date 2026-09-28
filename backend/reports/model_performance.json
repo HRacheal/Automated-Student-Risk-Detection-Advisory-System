@@ -1,0 +1,1089 @@
+{
+ "generated_at": "2026-09-28T17:46:58+00:00",
+ "generated_by": "backend/scripts/evaluate_models.py",
+ "rule_engine_pipeline": {
+  "evaluable": true,
+  "source": "pipeline",
+  "note": "Seed data shaped exactly like RosarioSIS/Moodle API responses, run through the production merge + anomaly rules in memory. Deterministic and reproducible.",
+  "test_set_size": 30,
+  "not_evaluated": [],
+  "classes": [
+   "LOW",
+   "MODERATE",
+   "HIGH"
+  ],
+  "accuracy_pct": 90.0,
+  "precision_macro": 0.914,
+  "recall_macro": 0.919,
+  "f1_macro": 0.915,
+  "f1_weighted": 0.901,
+  "roc_auc": null,
+  "roc_auc_reason": "Not applicable: the rule engine outputs a fixed risk level, not a probability score.",
+  "confusion_matrix": {
+   "labels": [
+    "LOW",
+    "MODERATE",
+    "HIGH"
+   ],
+   "rows_actual_cols_predicted": [
+    [
+     12,
+     2,
+     0
+    ],
+    [
+     1,
+     9,
+     0
+    ],
+    [
+     0,
+     0,
+     6
+    ]
+   ]
+  },
+  "classification_report": {
+   "LOW": {
+    "precision": 0.9230769230769231,
+    "recall": 0.8571428571428571,
+    "f1-score": 0.8888888888888888,
+    "support": 14.0
+   },
+   "MODERATE": {
+    "precision": 0.8181818181818182,
+    "recall": 0.9,
+    "f1-score": 0.8571428571428571,
+    "support": 10.0
+   },
+   "HIGH": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 6.0
+   },
+   "accuracy": 0.9,
+   "macro avg": {
+    "precision": 0.9137529137529138,
+    "recall": 0.919047619047619,
+    "f1-score": 0.9153439153439153,
+    "support": 30.0
+   },
+   "weighted avg": {
+    "precision": 0.9034965034965036,
+    "recall": 0.9,
+    "f1-score": 0.9005291005291004,
+    "support": 30.0
+   }
+  },
+  "classification_report_text": "              precision    recall  f1-score   support\n\n         LOW      0.923     0.857     0.889        14\n    MODERATE      0.818     0.900     0.857        10\n        HIGH      1.000     1.000     1.000         6\n\n    accuracy                          0.900        30\n   macro avg      0.914     0.919     0.915        30\nweighted avg      0.903     0.900     0.901        30\n",
+  "binary_at_risk": {
+   "accuracy_pct": 90.0,
+   "precision": 0.882,
+   "recall": 0.938,
+   "f1": 0.909,
+   "confusion_matrix": {
+    "labels": [
+     "Not at risk (LOW)",
+     "At risk (MODERATE/HIGH)"
+    ],
+    "rows_actual_cols_predicted": [
+     [
+      12,
+      2
+     ],
+     [
+      1,
+      15
+     ]
+    ]
+   },
+   "classification_report_text": "                         precision    recall  f1-score   support\n\n      Not at risk (LOW)      0.923     0.857     0.889        14\nAt risk (MODERATE/HIGH)      0.882     0.938     0.909        16\n\n               accuracy                          0.900        30\n              macro avg      0.903     0.897     0.899        30\n           weighted avg      0.901     0.900     0.900        30\n"
+  },
+  "matches_engine_specification": 30,
+  "per_student": [
+   {
+    "student_id": "690001",
+    "group": "green",
+    "scenario": "Strong performer, rising GPA; one course swapped within add/drop (dropped IST3015 3 Sep, added ENG2206 4 Sep)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690002",
+    "group": "green",
+    "scenario": "Stable B student",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690003",
+    "group": "green",
+    "scenario": "Improving GPA senior taking the capstone",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690004",
+    "group": "green",
+    "scenario": "Solid business student, 15 credits",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690005",
+    "group": "green",
+    "scenario": "Good first year; MTH1109 prerequisite is a placement exam (unverifiable, must not alert)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690006",
+    "group": "green",
+    "scenario": "Consistent business student",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690007",
+    "group": "green",
+    "scenario": "Senior on track (capstone, 90 credits, APT3050 passed)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690008",
+    "group": "green",
+    "scenario": "Average but engaged",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690009",
+    "group": "edge",
+    "scenario": "One-term GPA dip then recovery (latest change is a rise)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690010",
+    "group": "edge",
+    "scenario": "Single historical W (below the 3-withdrawal threshold)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690011",
+    "group": "edge",
+    "scenario": "New admit, no history; tuition installment 2 not yet due",
+    "expected": "LOW",
+    "predicted": "MODERATE",
+    "correct": false
+   },
+   {
+    "student_id": "690012",
+    "group": "edge",
+    "scenario": "Two late-but-submitted assignments; future work pending",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690013",
+    "group": "edge",
+    "scenario": "RosarioSIS only - no Moodle account (Moodle rules must be skipped, not flagged)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690014",
+    "group": "edge",
+    "scenario": "MTH1109 F (Fall 2024) then retaken with B (Spring 2025)",
+    "expected": "LOW",
+    "predicted": "MODERATE",
+    "correct": false
+   },
+   {
+    "student_id": "690015",
+    "group": "yellow",
+    "scenario": "Declining GPA 3.4 -> 3.0 -> 2.6",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690016",
+    "group": "yellow",
+    "scenario": "3 of 4 due assignments missed in APT2060",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690017",
+    "group": "yellow",
+    "scenario": "Quiz trend 85 -> 70 -> 60 (average still above 50%)",
+    "expected": "MODERATE",
+    "predicted": "LOW",
+    "correct": false
+   },
+   {
+    "student_id": "690018",
+    "group": "yellow",
+    "scenario": "Last Moodle access 16 days ago (work submitted early; Quiz 2 not attempted)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690019",
+    "group": "yellow",
+    "scenario": "Low course load (9 credits)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690020",
+    "group": "yellow",
+    "scenario": "APT2080 dropped 15 Sep (after add/drop deadline 14 Sep) with no replacement",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690021",
+    "group": "yellow",
+    "scenario": "Slow progression: 45 of 72 credits (62.5%); 5 F (2 retaken), 4 W, 2 D",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690022",
+    "group": "yellow",
+    "scenario": "Borderline cumulative GPA ~2.35",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690023",
+    "group": "yellow",
+    "scenario": "Business major enrolled in DSA1060 (outside the major)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690024",
+    "group": "yellow",
+    "scenario": "Undeclared with 36 credits",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690025",
+    "group": "red",
+    "scenario": "Major GPA decline, 3 W, incomplete, missed work, low quizzes, 21 days inactive",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690026",
+    "group": "red",
+    "scenario": "Dropped gatekeeper APT1030 (12 Sep) while enrolled in APT2080 which requires it; 4 missed",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690027",
+    "group": "red",
+    "scenario": "Two courses never opened, last access 34 days ago, all due work missed, no quiz attempts, slow credits",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690028",
+    "group": "red",
+    "scenario": "Probation GPA ~1.8, F in ACC2020 (retaking now), 2 W, overdue fee, 3 missed",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690029",
+    "group": "red",
+    "scenario": "GPA 3.0 -> ~2.2, incomplete DSA3010, 3 missed, quizzes ~43%",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690030",
+    "group": "red",
+    "scenario": "Undeclared with 66 credits, 6 credits this term, 4 F, 4 W",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   }
+  ],
+  "misclassified": [
+   {
+    "student_id": "690011",
+    "scenario": "New admit, no history; tuition installment 2 not yet due",
+    "expected": "LOW",
+    "predicted": "MODERATE"
+   },
+   {
+    "student_id": "690014",
+    "scenario": "MTH1109 F (Fall 2024) then retaken with B (Spring 2025)",
+    "expected": "LOW",
+    "predicted": "MODERATE"
+   },
+   {
+    "student_id": "690017",
+    "scenario": "Quiz trend 85 -> 70 -> 60 (average still above 50%)",
+    "expected": "MODERATE",
+    "predicted": "LOW"
+   }
+  ]
+ },
+ "rule_engine_stored": {
+  "evaluable": true,
+  "source": "stored",
+  "note": "Latest stored snapshots (sync run #28, completed; sources: rosario=ok, moodle=ok, demo=ok).",
+  "test_set_size": 30,
+  "not_evaluated": [],
+  "classes": [
+   "LOW",
+   "MODERATE",
+   "HIGH"
+  ],
+  "accuracy_pct": 90.0,
+  "precision_macro": 0.914,
+  "recall_macro": 0.919,
+  "f1_macro": 0.915,
+  "f1_weighted": 0.901,
+  "roc_auc": null,
+  "roc_auc_reason": "Not applicable: the rule engine outputs a fixed risk level, not a probability score.",
+  "confusion_matrix": {
+   "labels": [
+    "LOW",
+    "MODERATE",
+    "HIGH"
+   ],
+   "rows_actual_cols_predicted": [
+    [
+     12,
+     2,
+     0
+    ],
+    [
+     1,
+     9,
+     0
+    ],
+    [
+     0,
+     0,
+     6
+    ]
+   ]
+  },
+  "classification_report": {
+   "LOW": {
+    "precision": 0.9230769230769231,
+    "recall": 0.8571428571428571,
+    "f1-score": 0.8888888888888888,
+    "support": 14.0
+   },
+   "MODERATE": {
+    "precision": 0.8181818181818182,
+    "recall": 0.9,
+    "f1-score": 0.8571428571428571,
+    "support": 10.0
+   },
+   "HIGH": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 6.0
+   },
+   "accuracy": 0.9,
+   "macro avg": {
+    "precision": 0.9137529137529138,
+    "recall": 0.919047619047619,
+    "f1-score": 0.9153439153439153,
+    "support": 30.0
+   },
+   "weighted avg": {
+    "precision": 0.9034965034965036,
+    "recall": 0.9,
+    "f1-score": 0.9005291005291004,
+    "support": 30.0
+   }
+  },
+  "classification_report_text": "              precision    recall  f1-score   support\n\n         LOW      0.923     0.857     0.889        14\n    MODERATE      0.818     0.900     0.857        10\n        HIGH      1.000     1.000     1.000         6\n\n    accuracy                          0.900        30\n   macro avg      0.914     0.919     0.915        30\nweighted avg      0.903     0.900     0.901        30\n",
+  "binary_at_risk": {
+   "accuracy_pct": 90.0,
+   "precision": 0.882,
+   "recall": 0.938,
+   "f1": 0.909,
+   "confusion_matrix": {
+    "labels": [
+     "Not at risk (LOW)",
+     "At risk (MODERATE/HIGH)"
+    ],
+    "rows_actual_cols_predicted": [
+     [
+      12,
+      2
+     ],
+     [
+      1,
+      15
+     ]
+    ]
+   },
+   "classification_report_text": "                         precision    recall  f1-score   support\n\n      Not at risk (LOW)      0.923     0.857     0.889        14\nAt risk (MODERATE/HIGH)      0.882     0.938     0.909        16\n\n               accuracy                          0.900        30\n              macro avg      0.903     0.897     0.899        30\n           weighted avg      0.901     0.900     0.900        30\n"
+  },
+  "matches_engine_specification": 30,
+  "per_student": [
+   {
+    "student_id": "690001",
+    "group": "green",
+    "scenario": "Strong performer, rising GPA; one course swapped within add/drop (dropped IST3015 3 Sep, added ENG2206 4 Sep)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690002",
+    "group": "green",
+    "scenario": "Stable B student",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690003",
+    "group": "green",
+    "scenario": "Improving GPA senior taking the capstone",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690004",
+    "group": "green",
+    "scenario": "Solid business student, 15 credits",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690005",
+    "group": "green",
+    "scenario": "Good first year; MTH1109 prerequisite is a placement exam (unverifiable, must not alert)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690006",
+    "group": "green",
+    "scenario": "Consistent business student",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690007",
+    "group": "green",
+    "scenario": "Senior on track (capstone, 90 credits, APT3050 passed)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690008",
+    "group": "green",
+    "scenario": "Average but engaged",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690009",
+    "group": "edge",
+    "scenario": "One-term GPA dip then recovery (latest change is a rise)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690010",
+    "group": "edge",
+    "scenario": "Single historical W (below the 3-withdrawal threshold)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690011",
+    "group": "edge",
+    "scenario": "New admit, no history; tuition installment 2 not yet due",
+    "expected": "LOW",
+    "predicted": "MODERATE",
+    "correct": false
+   },
+   {
+    "student_id": "690012",
+    "group": "edge",
+    "scenario": "Two late-but-submitted assignments; future work pending",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690013",
+    "group": "edge",
+    "scenario": "RosarioSIS only - no Moodle account (Moodle rules must be skipped, not flagged)",
+    "expected": "LOW",
+    "predicted": "LOW",
+    "correct": true
+   },
+   {
+    "student_id": "690014",
+    "group": "edge",
+    "scenario": "MTH1109 F (Fall 2024) then retaken with B (Spring 2025)",
+    "expected": "LOW",
+    "predicted": "MODERATE",
+    "correct": false
+   },
+   {
+    "student_id": "690015",
+    "group": "yellow",
+    "scenario": "Declining GPA 3.4 -> 3.0 -> 2.6",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690016",
+    "group": "yellow",
+    "scenario": "3 of 4 due assignments missed in APT2060",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690017",
+    "group": "yellow",
+    "scenario": "Quiz trend 85 -> 70 -> 60 (average still above 50%)",
+    "expected": "MODERATE",
+    "predicted": "LOW",
+    "correct": false
+   },
+   {
+    "student_id": "690018",
+    "group": "yellow",
+    "scenario": "Last Moodle access 16 days ago (work submitted early; Quiz 2 not attempted)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690019",
+    "group": "yellow",
+    "scenario": "Low course load (9 credits)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690020",
+    "group": "yellow",
+    "scenario": "APT2080 dropped 15 Sep (after add/drop deadline 14 Sep) with no replacement",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690021",
+    "group": "yellow",
+    "scenario": "Slow progression: 45 of 72 credits (62.5%); 5 F (2 retaken), 4 W, 2 D",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690022",
+    "group": "yellow",
+    "scenario": "Borderline cumulative GPA ~2.35",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690023",
+    "group": "yellow",
+    "scenario": "Business major enrolled in DSA1060 (outside the major)",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690024",
+    "group": "yellow",
+    "scenario": "Undeclared with 36 credits",
+    "expected": "MODERATE",
+    "predicted": "MODERATE",
+    "correct": true
+   },
+   {
+    "student_id": "690025",
+    "group": "red",
+    "scenario": "Major GPA decline, 3 W, incomplete, missed work, low quizzes, 21 days inactive",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690026",
+    "group": "red",
+    "scenario": "Dropped gatekeeper APT1030 (12 Sep) while enrolled in APT2080 which requires it; 4 missed",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690027",
+    "group": "red",
+    "scenario": "Two courses never opened, last access 34 days ago, all due work missed, no quiz attempts, slow credits",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690028",
+    "group": "red",
+    "scenario": "Probation GPA ~1.8, F in ACC2020 (retaking now), 2 W, overdue fee, 3 missed",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690029",
+    "group": "red",
+    "scenario": "GPA 3.0 -> ~2.2, incomplete DSA3010, 3 missed, quizzes ~43%",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   },
+   {
+    "student_id": "690030",
+    "group": "red",
+    "scenario": "Undeclared with 66 credits, 6 credits this term, 4 F, 4 W",
+    "expected": "HIGH",
+    "predicted": "HIGH",
+    "correct": true
+   }
+  ],
+  "misclassified": [
+   {
+    "student_id": "690011",
+    "scenario": "New admit, no history; tuition installment 2 not yet due",
+    "expected": "LOW",
+    "predicted": "MODERATE"
+   },
+   {
+    "student_id": "690014",
+    "scenario": "MTH1109 F (Fall 2024) then retaken with B (Spring 2025)",
+    "expected": "LOW",
+    "predicted": "MODERATE"
+   },
+   {
+    "student_id": "690017",
+    "scenario": "Quiz trend 85 -> 70 -> 60 (average still above 50%)",
+    "expected": "MODERATE",
+    "predicted": "LOW"
+   }
+  ]
+ },
+ "ml_classifiers": {
+  "evaluable": true,
+  "role": "EXPERIMENTAL / advisory only. Shown as a probability on student pages; never creates alerts.",
+  "dataset": "Legacy `students` + `lms_activity` tables in the My Coach PostgreSQL database (real labelled records)",
+  "features": [
+   "completed_units",
+   "cumulative_gpa",
+   "tuition_balance",
+   "missed_assignments_count"
+  ],
+  "classes": [
+   "Not Red (Green/Yellow)",
+   "Red"
+  ],
+  "class_counts": {
+   "Not Red (Green/Yellow)": 11,
+   "Red": 4
+  },
+  "label_distribution": {
+   "Green": 6,
+   "Yellow": 5,
+   "Red": 4
+  },
+  "validation": "Leave-one-out cross-validation (each record predicted once by a model trained on the other records)",
+  "test_set_size": 15,
+  "baseline_majority_accuracy_pct": 73.3,
+  "selection_rule": "Highest F1 for the Red (positive) class; ties broken by ROC-AUC, then balanced accuracy, then the simpler model (order of CANDIDATES).",
+  "selected": "random_forest",
+  "models": [
+   {
+    "key": "logistic_regression",
+    "label": "Logistic Regression (standardised, class-balanced)",
+    "selected": false,
+    "accuracy_pct": 93.3,
+    "balanced_accuracy": 0.955,
+    "precision_red": 0.8,
+    "recall_red": 1.0,
+    "f1_red": 0.889,
+    "f1_macro": 0.921,
+    "roc_auc": 1.0,
+    "confusion_matrix": {
+     "labels": [
+      "Not Red (Green/Yellow)",
+      "Red"
+     ],
+     "rows_actual_cols_predicted": [
+      [
+       10,
+       1
+      ],
+      [
+       0,
+       4
+      ]
+     ]
+    },
+    "classification_report_text": "                        precision    recall  f1-score   support\n\nNot Red (Green/Yellow)      1.000     0.909     0.952        11\n                   Red      0.800     1.000     0.889         4\n\n              accuracy                          0.933        15\n             macro avg      0.900     0.955     0.921        15\n          weighted avg      0.947     0.933     0.935        15\n"
+   },
+   {
+    "key": "random_forest",
+    "label": "Random Forest (300 trees, class-balanced)",
+    "selected": true,
+    "accuracy_pct": 100.0,
+    "balanced_accuracy": 1.0,
+    "precision_red": 1.0,
+    "recall_red": 1.0,
+    "f1_red": 1.0,
+    "f1_macro": 1.0,
+    "roc_auc": 1.0,
+    "confusion_matrix": {
+     "labels": [
+      "Not Red (Green/Yellow)",
+      "Red"
+     ],
+     "rows_actual_cols_predicted": [
+      [
+       11,
+       0
+      ],
+      [
+       0,
+       4
+      ]
+     ]
+    },
+    "classification_report_text": "                        precision    recall  f1-score   support\n\nNot Red (Green/Yellow)      1.000     1.000     1.000        11\n                   Red      1.000     1.000     1.000         4\n\n              accuracy                          1.000        15\n             macro avg      1.000     1.000     1.000        15\n          weighted avg      1.000     1.000     1.000        15\n"
+   },
+   {
+    "key": "xgboost_small_data",
+    "label": "XGBoost (min_child_weight=0.1, scale_pos_weight=neg/pos)",
+    "selected": false,
+    "accuracy_pct": 93.3,
+    "balanced_accuracy": 0.955,
+    "precision_red": 0.8,
+    "recall_red": 1.0,
+    "f1_red": 0.889,
+    "f1_macro": 0.921,
+    "roc_auc": 1.0,
+    "confusion_matrix": {
+     "labels": [
+      "Not Red (Green/Yellow)",
+      "Red"
+     ],
+     "rows_actual_cols_predicted": [
+      [
+       10,
+       1
+      ],
+      [
+       0,
+       4
+      ]
+     ]
+    },
+    "classification_report_text": "                        precision    recall  f1-score   support\n\nNot Red (Green/Yellow)      1.000     0.909     0.952        11\n                   Red      0.800     1.000     0.889         4\n\n              accuracy                          0.933        15\n             macro avg      0.900     0.955     0.921        15\n          weighted avg      0.947     0.933     0.935        15\n"
+   },
+   {
+    "key": "xgboost_original",
+    "label": "XGBoost (original: 50 trees, depth 2, lr 0.1, defaults)",
+    "selected": false,
+    "accuracy_pct": 60.0,
+    "balanced_accuracy": 0.409,
+    "precision_red": 0.0,
+    "recall_red": 0.0,
+    "f1_red": 0.0,
+    "f1_macro": 0.375,
+    "roc_auc": 0.818,
+    "confusion_matrix": {
+     "labels": [
+      "Not Red (Green/Yellow)",
+      "Red"
+     ],
+     "rows_actual_cols_predicted": [
+      [
+       9,
+       2
+      ],
+      [
+       4,
+       0
+      ]
+     ]
+    },
+    "classification_report_text": "                        precision    recall  f1-score   support\n\nNot Red (Green/Yellow)      0.692     0.818     0.750        11\n                   Red      0.000     0.000     0.000         4\n\n              accuracy                          0.600        15\n             macro avg      0.346     0.409     0.375        15\n          weighted avg      0.508     0.600     0.550        15\n"
+   }
+  ],
+  "xgboost_diagnosis": "The original XGBoost (50 trees, depth 2, learning rate 0.1, default min_child_weight=1) is trained on ~14 records with only 3 Red per leave-one-out fold. A split needs a hessian weight of at least 1 in each child, which 3 positives (p(1-p) ~ 0.2 each) cannot provide, so almost no tree can split (about 0.4 splits per tree). The probabilities stay near the 27% base rate (max 0.43 for a true Red record), below the 0.5 threshold, so Red is never predicted. The data itself is separable (every Red record has 4+ missed assignments): allowing splits (min_child_weight=0.1) and weighting the minority class fixes XGBoost.",
+  "caveat": "Only 15 labelled records (4 Red), and the served model was chosen from 4 candidates evaluated on these same records, so the selected model's scores are optimistic. They show which configuration works on this data, not real-world accuracy."
+ },
+ "transformer": {
+  "evaluable": true,
+  "status": "EXPERIMENTAL - offline research only; not used by the API",
+  "input_sequence": [
+   "term_gpa",
+   "has_gpa",
+   "credits_attempted",
+   "credits_earned",
+   "completion_rate",
+   "withdrawals",
+   "fails",
+   "incompletes"
+  ],
+  "target": "Decline in the NEXT term: term GPA drops >= 0.30 from the latest term, or next-term GPA < 2.00, or next-term credit completion < 67 %.",
+  "hyperparameters": {
+   "model_dim": 32,
+   "num_heads": 4,
+   "num_layers": 2,
+   "dropout": 0.1,
+   "epochs": 150,
+   "lr": 0.001,
+   "weight_decay": 0.01
+  },
+  "validation": "5-fold StratifiedGroupKFold grouped by student (no student in both train and test); scaling fitted on training folds only; fixed hyper-parameters; threshold 0.5",
+  "real_data": {
+   "source": "legacy student_course_history table",
+   "samples": 3,
+   "positives": 2,
+   "negatives": 1,
+   "students": 3,
+   "students_with_positive": 2,
+   "sequence_lengths": [
+    1
+   ],
+   "gate": {
+    "samples >= 50": false,
+    "positive samples >= 10": false,
+    "students >= 10": false,
+    "students with a positive >= 5": false
+   },
+   "sufficient": false,
+   "decision": "Not trained - fails the data sufficiency gate."
+  },
+  "synthetic_data": {
+   "source": "backend/data/synthetic_student_demo_seed.json (fictitious students)",
+   "samples": 111,
+   "positives": 19,
+   "negatives": 92,
+   "students": 29,
+   "students_with_positive": 7,
+   "sequence_lengths": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "gate": {
+    "samples >= 50": true,
+    "positive samples >= 10": true,
+    "students >= 10": true,
+    "students with a positive >= 5": true
+   },
+   "sufficient": true
+  },
+  "trained_on": "SYNTHETIC data",
+  "folds": [
+   {
+    "fold": 1,
+    "test_students": 6,
+    "test_samples": 21,
+    "test_positives": 4
+   },
+   {
+    "fold": 2,
+    "test_students": 5,
+    "test_samples": 24,
+    "test_positives": 3
+   },
+   {
+    "fold": 3,
+    "test_students": 5,
+    "test_samples": 21,
+    "test_positives": 3
+   },
+   {
+    "fold": 4,
+    "test_students": 7,
+    "test_samples": 24,
+    "test_positives": 4
+   },
+   {
+    "fold": 5,
+    "test_students": 6,
+    "test_samples": 21,
+    "test_positives": 5
+   }
+  ],
+  "transformer": {
+   "accuracy_pct": 79.3,
+   "balanced_accuracy": 0.562,
+   "precision": 0.333,
+   "recall": 0.211,
+   "f1": 0.258,
+   "roc_auc": 0.597,
+   "confusion_matrix": {
+    "labels": [
+     "No decline",
+     "Decline next term"
+    ],
+    "rows_actual_cols_predicted": [
+     [
+      84,
+      8
+     ],
+     [
+      15,
+      4
+     ]
+    ]
+   },
+   "classification_report_text": "                   precision    recall  f1-score   support\n\n       No decline      0.848     0.913     0.880        92\nDecline next term      0.333     0.211     0.258        19\n\n         accuracy                          0.793       111\n        macro avg      0.591     0.562     0.569       111\n     weighted avg      0.760     0.793     0.773       111\n"
+  },
+  "baseline_logistic_regression": {
+   "accuracy_pct": 85.6,
+   "balanced_accuracy": 0.767,
+   "precision": 0.571,
+   "recall": 0.632,
+   "f1": 0.6,
+   "roc_auc": 0.709,
+   "confusion_matrix": {
+    "labels": [
+     "No decline",
+     "Decline next term"
+    ],
+    "rows_actual_cols_predicted": [
+     [
+      83,
+      9
+     ],
+     [
+      7,
+      12
+     ]
+    ]
+   },
+   "classification_report_text": "                   precision    recall  f1-score   support\n\n       No decline      0.922     0.902     0.912        92\nDecline next term      0.571     0.632     0.600        19\n\n         accuracy                          0.856       111\n        macro avg      0.747     0.767     0.756       111\n     weighted avg      0.862     0.856     0.859       111\n"
+  },
+  "baseline_majority": {
+   "accuracy_pct": 82.9,
+   "balanced_accuracy": 0.5,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0,
+   "roc_auc": null,
+   "confusion_matrix": {
+    "labels": [
+     "No decline",
+     "Decline next term"
+    ],
+    "rows_actual_cols_predicted": [
+     [
+      92,
+      0
+     ],
+     [
+      19,
+      0
+     ]
+    ]
+   },
+   "classification_report_text": "                   precision    recall  f1-score   support\n\n       No decline      0.829     1.000     0.906        92\nDecline next term      0.000     0.000     0.000        19\n\n         accuracy                          0.829       111\n        macro avg      0.414     0.500     0.453       111\n     weighted avg      0.687     0.829     0.751       111\n"
+  },
+  "seed_stability": {
+   "runs": [
+    {
+     "seed": 0,
+     "f1": 0.27,
+     "roc_auc": 0.594
+    },
+    {
+     "seed": 1,
+     "f1": 0.364,
+     "roc_auc": 0.677
+    },
+    {
+     "seed": 2,
+     "f1": 0.432,
+     "roc_auc": 0.676
+    },
+    {
+     "seed": 3,
+     "f1": 0.419,
+     "roc_auc": 0.61
+    },
+    {
+     "seed": 4,
+     "f1": 0.303,
+     "roc_auc": 0.662
+    }
+   ],
+   "f1_mean": 0.358,
+   "f1_std": 0.063
+  },
+  "caveat": "Trained and evaluated on 111 windows from 29 FICTITIOUS students (19 positives from 7 students). The synthetic histories were written to exercise the rule engine, so these numbers show the pipeline works; they are NOT evidence of real-world predictive performance.",
+  "artifact": "reports\\transformer_synthetic.pt"
+ }
+}

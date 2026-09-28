@@ -1,0 +1,100 @@
+MY COACH MODEL EVALUATION  (2026-09-28T17:46:58+00:00)
+==============================================================================
+A. Experimental ML risk classifier (advisory only - never creates alerts)
+   Data: Legacy `students` + `lms_activity` tables in the My Coach PostgreSQL database (real labelled records)
+   Classes: ['Not Red (Green/Yellow)', 'Red']   counts: {'Not Red (Green/Yellow)': 11, 'Red': 4}
+   Validation: Leave-one-out cross-validation (each record predicted once by a model trained on the other records)   test predictions per model: 15
+   Majority-class baseline accuracy: 73.3%
+   Selection rule: Highest F1 for the Red (positive) class; ties broken by ROC-AUC, then balanced accuracy, then the simpler model (order of CANDIDATES).
+      Logistic Regression (standardised, class-balanced)
+      accuracy 93.3%  balanced acc 0.955  precision(Red) 0.8  recall(Red) 1.0  F1(Red) 0.889  F1(macro) 0.921  ROC-AUC 1.0  confusion [[10, 1], [0, 4]]
+   >> SELECTED Random Forest (300 trees, class-balanced)
+      accuracy 100.0%  balanced acc 1.0  precision(Red) 1.0  recall(Red) 1.0  F1(Red) 1.0  F1(macro) 1.0  ROC-AUC 1.0  confusion [[11, 0], [0, 4]]
+      XGBoost (min_child_weight=0.1, scale_pos_weight=neg/pos)
+      accuracy 93.3%  balanced acc 0.955  precision(Red) 0.8  recall(Red) 1.0  F1(Red) 0.889  F1(macro) 0.921  ROC-AUC 1.0  confusion [[10, 1], [0, 4]]
+      XGBoost (original: 50 trees, depth 2, lr 0.1, defaults)
+      accuracy 60.0%  balanced acc 0.409  precision(Red) 0.0  recall(Red) 0.0  F1(Red) 0.0  F1(macro) 0.375  ROC-AUC 0.818  confusion [[9, 2], [4, 0]]
+   Classification report (selected model):
+                        precision    recall  f1-score   support
+
+Not Red (Green/Yellow)      1.000     1.000     1.000        11
+                   Red      1.000     1.000     1.000         4
+
+              accuracy                          1.000        15
+             macro avg      1.000     1.000     1.000        15
+          weighted avg      1.000     1.000     1.000        15
+
+   XGBoost diagnosis: The original XGBoost (50 trees, depth 2, learning rate 0.1, default min_child_weight=1) is trained on ~14 records with only 3 Red per leave-one-out fold. A split needs a hessian weight of at least 1 in each child, which 3 positives (p(1-p) ~ 0.2 each) cannot provide, so almost no tree can split (about 0.4 splits per tree). The probabilities stay near the 27% base rate (max 0.43 for a true Red record), below the 0.5 threshold, so Red is never predicted. The data itself is separable (every Red record has 4+ missed assignments): allowing splits (min_child_weight=0.1) and weighting the minority class fixes XGBoost.
+   CAVEAT: Only 15 labelled records (4 Red), and the served model was chosen from 4 candidates evaluated on these same records, so the selected model's scores are optimistic. They show which configuration works on this data, not real-world accuracy.
+==============================================================================
+B1. Rule engine - synthetic data through the real pipeline
+   Seed data shaped exactly like RosarioSIS/Moodle API responses, run through the production merge + anomaly rules in memory. Deterministic and reproducible.
+   Classes: ['LOW', 'MODERATE', 'HIGH']   test set: 30 students
+   Accuracy 90.0%  Precision(macro) 0.914  Recall(macro) 0.919  F1(macro) 0.915  F1(weighted) 0.901
+   ROC-AUC: Not applicable: the rule engine outputs a fixed risk level, not a probability score.
+   Confusion matrix (rows=actual, cols=predicted) LOW/MODERATE/HIGH:
+      [12, 2, 0]
+      [1, 9, 0]
+      [0, 0, 6]
+              precision    recall  f1-score   support
+
+         LOW      0.923     0.857     0.889        14
+    MODERATE      0.818     0.900     0.857        10
+        HIGH      1.000     1.000     1.000         6
+
+    accuracy                          0.900        30
+   macro avg      0.914     0.919     0.915        30
+weighted avg      0.903     0.900     0.901        30
+
+   At-risk (MODERATE/HIGH) vs LOW: accuracy 90.0%  precision 0.882  recall 0.938  F1 0.909  matrix [[12, 2], [1, 15]]
+   Matches the engine's own specification: 30/30
+   MISCLASSIFIED 690011: expected LOW, got MODERATE - New admit, no history; tuition installment 2 not yet due
+   MISCLASSIFIED 690014: expected LOW, got MODERATE - MTH1109 F (Fall 2024) then retaken with B (Spring 2025)
+   MISCLASSIFIED 690017: expected MODERATE, got LOW - Quiz trend 85 -> 70 -> 60 (average still above 50%)
+==============================================================================
+B2. Rule engine - live stored results
+   Latest stored snapshots (sync run #28, completed; sources: rosario=ok, moodle=ok, demo=ok).
+   Classes: ['LOW', 'MODERATE', 'HIGH']   test set: 30 students
+   Accuracy 90.0%  Precision(macro) 0.914  Recall(macro) 0.919  F1(macro) 0.915  F1(weighted) 0.901
+   ROC-AUC: Not applicable: the rule engine outputs a fixed risk level, not a probability score.
+   Confusion matrix (rows=actual, cols=predicted) LOW/MODERATE/HIGH:
+      [12, 2, 0]
+      [1, 9, 0]
+      [0, 0, 6]
+              precision    recall  f1-score   support
+
+         LOW      0.923     0.857     0.889        14
+    MODERATE      0.818     0.900     0.857        10
+        HIGH      1.000     1.000     1.000         6
+
+    accuracy                          0.900        30
+   macro avg      0.914     0.919     0.915        30
+weighted avg      0.903     0.900     0.901        30
+
+   At-risk (MODERATE/HIGH) vs LOW: accuracy 90.0%  precision 0.882  recall 0.938  F1 0.909  matrix [[12, 2], [1, 15]]
+   Matches the engine's own specification: 30/30
+   MISCLASSIFIED 690011: expected LOW, got MODERATE - New admit, no history; tuition installment 2 not yet due
+   MISCLASSIFIED 690014: expected LOW, got MODERATE - MTH1109 F (Fall 2024) then retaken with B (Spring 2025)
+   MISCLASSIFIED 690017: expected MODERATE, got LOW - Quiz trend 85 -> 70 -> 60 (average still above 50%)
+==============================================================================
+C. Transformer sequence model (EXPERIMENTAL, offline only)
+   Real data (legacy student_course_history table): 3 windows from 3 students -> Not trained - fails the data sufficiency gate.
+   Target: Decline in the NEXT term: term GPA drops >= 0.30 from the latest term, or next-term GPA < 2.00, or next-term credit completion < 67 %.
+   Input per term: term_gpa, has_gpa, credits_attempted, credits_earned, completion_rate, withdrawals, fails, incompletes
+   Validation: 5-fold StratifiedGroupKFold grouped by student (no student in both train and test); scaling fitted on training folds only; fixed hyper-parameters; threshold 0.5
+   Data: 111 windows, 19 positive, 29 synthetic students
+   Transformer                      acc 79.3%  precision 0.333  recall 0.211  F1 0.258  ROC-AUC 0.597  confusion [[84, 8], [15, 4]]
+   Baseline: logistic regression    acc 85.6%  precision 0.571  recall 0.632  F1 0.6  ROC-AUC 0.709  confusion [[83, 9], [7, 12]]
+   Baseline: always 'no decline'    acc 82.9%  precision 0.0  recall 0.0  F1 0.0  ROC-AUC None  confusion [[92, 0], [19, 0]]
+   Classification report (Transformer):
+                   precision    recall  f1-score   support
+
+       No decline      0.848     0.913     0.880        92
+Decline next term      0.333     0.211     0.258        19
+
+         accuracy                          0.793       111
+        macro avg      0.591     0.562     0.569       111
+     weighted avg      0.760     0.793     0.773       111
+
+   Seed stability (5 seeds): F1 0.358 +/- 0.063
+   CAVEAT: Trained and evaluated on 111 windows from 29 FICTITIOUS students (19 positives from 7 students). The synthetic histories were written to exercise the rule engine, so these numbers show the pipeline works; they are NOT evidence of real-world predictive performance.

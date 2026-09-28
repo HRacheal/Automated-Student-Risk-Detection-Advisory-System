@@ -14,3 +14,5 @@ build/
 # Environment Variables & Secrets
 .env
 .env.local
+# Backups of secret files
+.env.bak*
