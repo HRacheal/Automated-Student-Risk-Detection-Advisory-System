@@ -1,0 +1,20 @@
+# Secrets - never commit (backend/ and frontend/ have their own .gitignore as well)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Node / Next.js
+node_modules/
+.next/
+
+# OS / editor
+.DS_Store
+Thumbs.db
