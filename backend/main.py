@@ -19,8 +19,11 @@ from config import missing_required_settings, settings
 
 _missing = missing_required_settings()
 if _missing:
-    raise RuntimeError(f"Missing required settings in backend/.env: {', '.join(_missing)} "
-                       f"(see backend/.env.example)")
+    # On Render there is no backend/.env: these must be set in the service's Environment tab,
+    # otherwise the deploy fails and Render keeps serving the previous (older) build.
+    raise RuntimeError(f"Missing required environment variables: {', '.join(_missing)}. "
+                       f"Set them in backend/.env locally, or in the Render service's Environment "
+                       f"settings in production (see backend/.env.example)")
 
 import models  # noqa: E402
 from database import engine  # noqa: E402
