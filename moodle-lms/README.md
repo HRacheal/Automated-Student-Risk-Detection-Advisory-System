@@ -83,6 +83,10 @@ C:\Users\Admin\Downloads\Moodle\server\php\php.exe moodle-setup\setup_lms_servic
 
 ## Run locally
 
+Quick start (after the one-time setup below): from `moodle-lms`, run `.\start-lms.ps1`. It starts Moodle, waits
+until http://localhost:8081 answers, then opens the backend (:8100) and frontend (:5173) in their own windows.
+Anything already running on its port is left alone, so it is safe to re-run.
+
 Prerequisites: Moodle running (`Start Moodle.exe`, http://localhost:8081), My Coach backend on :8000 (for the
 My Coach card), Python 3.12, Node 20+.
 
