@@ -16,6 +16,7 @@ from urllib.parse import unquote
 from zoneinfo import ZoneInfo
 
 from fastapi import Depends, FastAPI, File, HTTPException, Query, Request, Response, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field
 
@@ -57,7 +58,7 @@ async def _auth(request: Request, exc: MoodleAuthError):
     store.delete(request.cookies.get(settings.SESSION_COOKIE))
     res = JSONResponse({"detail": "Your session has expired. Please sign in again.", "code": "session_expired"},
                        status_code=401)
-    res.delete_cookie(settings.SESSION_COOKIE, path="/")
+    res.delete_cookie(settings.SESSION_COOKIE, path="/", httponly=True, **_cookie_attrs(request))
     return res
 
 
@@ -82,6 +83,20 @@ async def require_ajax_header(request: Request, call_next):
         if request.headers.get("x-requested-with") != "mycoach-lms":
             return JSONResponse({"detail": "Missing request header."}, status_code=403)
     return await call_next(request)
+
+
+# Only the configured frontend origins (e.g. GitHub Pages) get CORS; added last so it is the outermost layer.
+if settings.CORS_ORIGINS:
+    app.add_middleware(CORSMiddleware, allow_origins=settings.CORS_ORIGINS, allow_credentials=True,
+                       allow_methods=["GET", "POST", "DELETE"],
+                       allow_headers=["Accept", "Content-Type", "X-Requested-With"])
+
+
+def _cookie_attrs(request: Request) -> dict:
+    """SameSite=Lax for same-origin use; a cross-site frontend needs SameSite=None, which requires Secure."""
+    if request.headers.get("origin", "").rstrip("/") in settings.CORS_ORIGINS:
+        return {"samesite": "none", "secure": True}
+    return {"samesite": "lax", "secure": settings.COOKIE_SECURE}
 
 
 # ---------------------------------------------------------------- session helpers
@@ -155,7 +170,7 @@ async def login(body: LoginBody, request: Request, response: Response):
 
     sid, session = store.create(token=token, moodle_userid=int(info["userid"]), student_id=idnumber,
                                 username=info.get("username", username), fullname=info.get("fullname", ""))
-    response.set_cookie(settings.SESSION_COOKIE, sid, httponly=True, samesite="lax", secure=settings.COOKIE_SECURE,
+    response.set_cookie(settings.SESSION_COOKIE, sid, httponly=True, **_cookie_attrs(request),
                         max_age=int(settings.SESSION_TTL_HOURS * 3600), path="/")
     return {"user": _public_user(session)}
 
@@ -163,7 +178,7 @@ async def login(body: LoginBody, request: Request, response: Response):
 @app.post("/api/auth/logout")
 async def logout(request: Request, response: Response):
     store.delete(request.cookies.get(settings.SESSION_COOKIE))
-    response.delete_cookie(settings.SESSION_COOKIE, path="/")
+    response.delete_cookie(settings.SESSION_COOKIE, path="/", httponly=True, **_cookie_attrs(request))
     return {"ok": True}
 
 

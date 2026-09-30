@@ -4,7 +4,7 @@ import Icon, { moduleIcon } from "../components/Icon";
 import { AssignmentTable, GradeTable, ProgressDetail, QuizTable } from "../components/tables";
 import { AssignmentPill, Card, EmptyState, Loaded, PageHeader, Pill, ProgressBar, QuizPill, Skeleton } from "../components/ui";
 import { courseColor } from "../components/widgets";
-import { api } from "../api";
+import { api, apiUrl } from "../api";
 import { dateOnly, dateTime } from "../format";
 import type { CourseDetail, CourseGrades, Module } from "../types";
 import { useApi } from "../useApi";
@@ -109,7 +109,7 @@ function ModuleRow({ m, onChanged }: { m: Module; onChanged: () => void }) {
       <div className="module-main">
         <div className="module-title">
           {to ? <Link to={to} className="strong-link">{m.name}</Link>
-            : m.files[0]?.url ? <a href={m.files[0].url} className="strong-link" target="_blank" rel="noopener noreferrer">{m.name}</a>
+            : m.files[0]?.url ? <a href={apiUrl(m.files[0].url)} className="strong-link" target="_blank" rel="noopener noreferrer">{m.name}</a>
             : <span className="strong">{m.name}</span>}
           <span className="muted small">{m.module_label?.replace(/s$/, "")}</span>
         </div>

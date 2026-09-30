@@ -1,6 +1,6 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
-import { api, ApiError } from "../api";
+import { api, apiUrl, ApiError } from "../api";
 import Icon from "../components/Icon";
 import { AssignmentPill, Card, ErrorState, Field, Loaded, PageHeader, Pill, Skeleton } from "../components/ui";
 import { dateTime, duration, fileSize, relative } from "../format";
@@ -100,7 +100,7 @@ function FileList({ files }: { files: { filename: string; size?: number | null; 
       {files.map((f, i) => (
         <li key={i}>
           <Icon name="file" size={16} />
-          {f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer">{f.filename}</a> : <span>{f.filename}</span>}
+          {f.url ? <a href={apiUrl(f.url)} target="_blank" rel="noopener noreferrer">{f.filename}</a> : <span>{f.filename}</span>}
           {f.size != null && <span className="muted small">{fileSize(f.size)}</span>}
         </li>
       ))}

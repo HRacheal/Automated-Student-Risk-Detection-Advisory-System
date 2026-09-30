@@ -12,6 +12,14 @@ export class ApiError extends Error {
 
 export const UNREACHABLE = "The LMS server is not reachable. Please try again.";
 
+// Empty in dev (Vite proxies /api); set at build time when the frontend is hosted apart from the API.
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
+
+/** Absolute URL for a backend path such as "/api/files?url=..." (links, downloads). */
+export function apiUrl(path: string): string {
+  return path.startsWith("/api/") ? API_BASE + path : path;
+}
+
 type Options = { method?: string; body?: unknown; form?: FormData; signal?: AbortSignal };
 
 export async function api<T>(path: string, opts: Options = {}): Promise<T> {
@@ -25,8 +33,8 @@ export async function api<T>(path: string, opts: Options = {}): Promise<T> {
   }
   let res: Response;
   try {
-    res = await fetch(path, { method: opts.method || (body ? "POST" : "GET"), headers, body,
-                              credentials: "same-origin", signal: opts.signal });
+    res = await fetch(apiUrl(path), { method: opts.method || (body ? "POST" : "GET"), headers, body,
+                                      credentials: API_BASE ? "include" : "same-origin", signal: opts.signal });
   } catch (err) {
     if ((err as Error).name === "AbortError") throw err;
     throw new ApiError(0, UNREACHABLE);

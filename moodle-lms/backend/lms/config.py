@@ -32,6 +32,10 @@ class Settings:
     SESSION_TTL_HOURS: float = float(os.getenv("SESSION_TTL_HOURS", "8"))
     SESSION_COOKIE: str = "mycoach_lms_session"
     COOKIE_SECURE: bool = _bool("COOKIE_SECURE", False)   # set true behind HTTPS
+    # Browser origins allowed to call the API cross-site (e.g. the GitHub Pages frontend). Requests from
+    # these get CORS credentials and a SameSite=None; Secure session cookie; all others keep SameSite=Lax.
+    CORS_ORIGINS: list[str] = [o.strip().rstrip("/") for o in
+                               os.getenv("CORS_ORIGINS", "https://hracheal.github.io").split(",") if o.strip()]
 
     # My Coach (risk engine) - server-to-server only
     MYCOACH_API_URL: str = os.getenv("MYCOACH_API_URL", "").rstrip("/")
