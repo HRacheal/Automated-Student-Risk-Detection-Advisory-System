@@ -14,6 +14,13 @@ Moodle (LMS activity)  ─┘        (+ experimental ML probability, kept separa
 - **Rule-based anomalies** are the source of alerts. The **ML prediction** (XGBoost + SHAP) is shown separately as
   an experimental estimate and never creates alerts.
 
+## Student LMS (`moodle-lms/`)
+
+A separate student-facing LMS app for the same Moodle (courses, assignments with file submission, quizzes,
+grades, progress, calendar, notifications). It links to the My Coach student portal and reads the student's
+risk summary from `GET /api/integration/lms/students/{id}/summary` (enabled by `LMS_INTEGRATION_KEY`).
+See [moodle-lms/README.md](moodle-lms/README.md).
+
 ## Run locally
 
 Prerequisites: XAMPP with RosarioSIS (REST_API plugin active), Python 3.12, Node 20+.

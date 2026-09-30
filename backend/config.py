@@ -60,6 +60,10 @@ class Settings:
     # written to RosarioSIS or Moodle.
     DEMO_DATA_ENABLED: bool = _bool("DEMO_DATA_ENABLED", True)
 
+    # Shared key for the My Coach LMS app (moodle-lms/) server-to-server risk summary.
+    # Empty => the integration endpoint is disabled.
+    LMS_INTEGRATION_KEY: str = os.getenv("LMS_INTEGRATION_KEY", "")
+
     CORS_ORIGINS: list[str] = _list(
         "CORS_ORIGINS",
         "http://localhost:3000,http://127.0.0.1:3000,http://192.168.56.1:3000,"

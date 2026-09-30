@@ -27,7 +27,8 @@ if _missing:
 
 import models  # noqa: E402
 from database import engine  # noqa: E402
-from routers import admin, alerts, model_performance, session, student_portal, students, system  # noqa: E402
+from routers import (admin, alerts, lms_integration, model_performance, session, student_portal,  # noqa: E402
+                     students, system)
 
 log = logging.getLogger("mycoach")
 
@@ -67,6 +68,7 @@ app.include_router(system.router)
 app.include_router(student_portal.router)
 app.include_router(admin.router)
 app.include_router(model_performance.router)
+app.include_router(lms_integration.router)
 
 
 @app.get("/", tags=["system"], include_in_schema=False)
